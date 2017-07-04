@@ -14,16 +14,25 @@ const shelfCategories = [
 class BooksApp extends React.Component {
   state = {
     books: [],
-    myBooks: []
+    myBooks: [],
+    query: ''
   }
 
   componentDidMount() {
-    // @TODO update books in state
     BooksAPI.getAll().then((data) => {
       this.setState({
         books: data,
         myBooks: data.filter((b) => b.shelf)
       })
+    })
+  }
+
+  handleQueryChange = (query) => {
+    BooksAPI.search(query).then((books) => {
+      if(!books || !books.length) {
+        books = []
+      }
+      this.setState({ books, query })
     })
   }
 
@@ -37,14 +46,15 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const books = this.state.books
-    const myBooks = this.state.myBooks
+    const { books, myBooks, query } = this.state
 
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
           <SearchPage
             books={books}
+            query={query}
+            queryChanged={this.handleQueryChange}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
