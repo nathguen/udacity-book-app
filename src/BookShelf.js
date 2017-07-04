@@ -21,16 +21,22 @@ class BookShelf extends Component {
       <div className="bookshelf">
         <h2 className="bookshelf-title">{ChangeCase.title(this.props.title)}</h2>
         <div className="bookshelf-books">
-          <ol className="books-grid">
-            { books.map((book) => (
-              <li key={book.id}>
-                <Book
-                  book={book}
-                  shelfCategories={categories}
-                  userBookChange={this.props.userBookChange}/>
-              </li>
-            ))}
-          </ol>
+          { books.length === 0 && (
+            <p>No books to show</p>
+          )}
+
+          { books.length > 0 && (
+            <ol className="books-grid">
+              { books.map((book) => (
+                <li key={book.id}>
+                  <Book
+                    book={book}
+                    shelfCategories={categories}
+                    userBookChange={this.props.userBookChange}/>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       </div>
     )
