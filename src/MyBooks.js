@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Book from './Book'
+import BookShelf from './BookShelf'
+
+const shelfCategories = [
+  'currentlyReading',
+  'wantToRead',
+  'read'
+]
 
 class MyBooksPage extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    userBookChange: PropTypes.func.isRequired
   }
 
   render() {
-    console.log(this.props.books)
+    const books = this.props.books
 
     return (
       <div className="list-books">
@@ -18,42 +25,15 @@ class MyBooksPage extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books.filter(b => b.shelf === 'currentlyReading').map((book) => (
-                    <li key={book.id}>
-                      <Book book={book} userBookChange={this.props.userBookChange}/>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books.filter(b => b.shelf === 'wantToRead').map((book) => (
-                    <li key={book.id}>
-                      <Book book={book} userBookChange={this.props.userBookChange}/>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books.filter(b => b.shelf === 'read').map((book) => (
-                    <li key={book.id}>
-                      <Book book={book} userBookChange={this.props.userBookChange}/>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
+            {shelfCategories.map(category => (
+              (books.filter(b => b.shelf === category) && (
+                <BookShelf
+                  key={category}
+                  books={books.filter(b => b.shelf === category)}
+                  userBookChange={this.props.userBookChange}
+                  title={category}/>
+              ))
+            ))}
           </div>
         </div>
         <div className="open-search">
