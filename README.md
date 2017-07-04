@@ -9,7 +9,6 @@ You can install using one of two methods:
 
 `npm install`
 
-then
 
 `npm start`
 
@@ -17,7 +16,6 @@ then
 
 `yarn install`
 
-then
 
 `yarn start`
 
