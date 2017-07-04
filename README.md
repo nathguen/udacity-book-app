@@ -28,6 +28,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+This repository is built for a Udacity study project only. Pull requests will not be accepted.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
