@@ -14,8 +14,7 @@ const shelfCategories = [
 class BooksApp extends React.Component {
   state = {
     books: [],
-    myBooks: [],
-    query: ''
+    myBooks: []
   }
 
   componentDidMount() {
@@ -24,15 +23,6 @@ class BooksApp extends React.Component {
         books: data,
         myBooks: data.filter((b) => b.shelf)
       })
-    })
-  }
-
-  handleQueryChange = (query) => {
-    BooksAPI.search(query).then((books) => {
-      if(!books || !books.length) {
-        books = []
-      }
-      this.setState({ books, query })
     })
   }
 
@@ -53,14 +43,11 @@ class BooksApp extends React.Component {
         <Route exact path="/search" render={() => (
           <SearchPage
             books={books}
-            query={query}
-            queryChanged={this.handleQueryChange}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
         <Route exact path="/" render={() => (
           <MyBooksPage
-            books={myBooks}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
