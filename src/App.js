@@ -5,6 +5,12 @@ import './App.css'
 import SearchPage from './SearchPage'
 import MyBooksPage from './MyBooks'
 
+const shelfCategories = [
+  'currentlyReading',
+  'wantToRead',
+  'read'
+]
+
 class BooksApp extends React.Component {
   state = {
     books: [],
@@ -39,11 +45,13 @@ class BooksApp extends React.Component {
         <Route exact path="/search" render={() => (
           <SearchPage
             books={books}
+            categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
         <Route exact path="/" render={() => (
           <MyBooksPage
             books={myBooks}
+            categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
       </div>
