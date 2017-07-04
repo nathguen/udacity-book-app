@@ -1,28 +1,28 @@
-This is the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+# Application
+This is a web application that demonstrates a variety of techniques and concepts within the React community.
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+## Installation
 
-## Backend Server
+You can install using one of two methods:
 
-To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+1. NPM
 
-### `getAll()`
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
+`npm install`
 
-### `update(book, shelf)`
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
+then
 
-### `search(query, maxResults)`
-* query: `<String>`
-* maxResults: `<Integer>` Due to the nature of the backend server, search results are capped at 20, even if this is set higher.
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
+`npm start`
 
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results. 
+2. YARN
+
+`yarn install`
+
+then
+
+`yarn start`
+
+Yarn is a tool built by Facebook that optimizes the processes of `npm`. To learn more visit [https://yarnpkg.com/en/](https://yarnpkg.com/en/).
+
 
 ## create-react-app
 

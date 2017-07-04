@@ -18,7 +18,7 @@ class Book extends Component {
   render() {
     const { book } = this.props
     let shelfCategories = this.props.shelfCategories
-    if (!shelfCategories.filter(cat => cat === 'none')) {
+    if (shelfCategories.filter(cat => cat === 'none').length === 0) {
       shelfCategories.push('none')
     }
 
