@@ -8,27 +8,15 @@ import * as BooksAPI from './BooksAPI'
 class SearchPage extends Component {
   static propTypes = {
     userBookChange: PropTypes.func.isRequired,
-    categories: PropTypes.array.isRequired
-  }
-
-  state = {
-    query: '',
-    results: []
-  }
-
-  handleQueryChange = (query) => {
-    this.setState({ query })
-    BooksAPI.search(query).then((results) => {
-      if(!results || !results.length) {
-        results = []
-      }
-      this.setState({ results })
-    })
+    categories: PropTypes.array.isRequired,
+    updateQuery: PropTypes.func.isRequired,
+    query: PropTypes.string.isRequired,
+    searchResults: PropTypes.array.isRequired
   }
 
   render() {
-    const query = this.state.query
-    let results = this.state.results
+    const query = this.props.query
+    let results = this.props.searchResults
     if (results) {
       results.sort(sortBy('title'))
     }
@@ -40,7 +28,7 @@ class SearchPage extends Component {
           <div className="search-books-input-wrapper">
             <input
               value={query}
-              onChange={(e) => this.handleQueryChange(e.target.value)}
+              onChange={(e) => this.props.updateQuery(e.target.value)}
               type="text"
               placeholder="Search by title or author"/>
           </div>

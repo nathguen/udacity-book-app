@@ -14,7 +14,9 @@ const shelfCategories = [
 class BooksApp extends React.Component {
   state = {
     books: [],
-    myBooks: []
+    myBooks: [],
+    query: '',
+    searchResults: []
   }
 
   componentDidMount() {
@@ -35,19 +37,36 @@ class BooksApp extends React.Component {
     })
   }
 
+  updateQuery = (query) => {
+    this.setState({ query })
+    this.getSearchResults(query)
+  }
+
+  getSearchResults = (query) => {
+    BooksAPI.search(query).then((searchResults) => {
+      if(!searchResults || !searchResults.length) {
+        searchResults = []
+      }
+      this.setState({ searchResults })
+    })
+  }
+
   render() {
-    const { books, myBooks, query } = this.state
+    const { myBooks, query, searchResults } = this.state
 
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
           <SearchPage
-            books={books}
+            query={query}
+            updateQuery={this.updateQuery}
+            searchResults={searchResults}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
         <Route exact path="/" render={() => (
           <MyBooksPage
+            books={myBooks}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
