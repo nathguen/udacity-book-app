@@ -7,7 +7,8 @@ class MyBooksPage extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     userBookChange: PropTypes.func.isRequired,
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
+    query: PropTypes.string.isRequired
   }
 
   render() {
@@ -33,7 +34,7 @@ class MyBooksPage extends Component {
           </div>
         </div>
         <div className="open-search">
-          <Link to="/search">Add a book</Link>
+          <Link to={ '/search/' + (this.props.query ? this.props.query : ' ') }>Add a book</Link>
         </div>
       </div>
     )

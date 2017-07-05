@@ -4,12 +4,15 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchPage from './SearchPage'
 import MyBooksPage from './MyBooks'
+import createHistory from 'history/createBrowserHistory'
 
 const shelfCategories = [
   'currentlyReading',
   'wantToRead',
   'read'
 ]
+
+const history = createHistory()
 
 class BooksApp extends React.Component {
   state = {
@@ -30,6 +33,7 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     this.fetchBooks()
+    this.updateQuery()
   }
 
   handleUserBookChange = (book) => {
@@ -42,9 +46,18 @@ class BooksApp extends React.Component {
     })
   }
 
-  updateQuery = (query) => {
+  listen = history.listen((location, action) => {
+    this.updateQuery()
+  })
+
+  updateQuery = () => {
+    const query = history.location.pathname.substring('/search/'.length)
     this.setState({ query })
     this.getSearchResults(query)
+  }
+
+  updateUrl = (query) => {
+    history.push('/search/' + query)
   }
 
   getSearchResults = (query) => {
@@ -61,10 +74,10 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route exact path="/search" render={() => (
+        <Route exact path="/search/:query" render={() => (
           <SearchPage
             query={query}
-            updateQuery={this.updateQuery}
+            updateQuery={this.updateUrl}
             searchResults={searchResults}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
@@ -72,6 +85,7 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={() => (
           <MyBooksPage
             books={myBooks}
+            query={query}
             categories={shelfCategories}
             userBookChange={(book) => this.handleUserBookChange(book)} />
         )}/>
