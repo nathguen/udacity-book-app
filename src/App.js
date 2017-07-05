@@ -33,7 +33,9 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     this.fetchBooks()
-    this.updateQuery()
+    if (this.onSearchPage()) {
+      this.updateQuery()
+    }
   }
 
   handleUserBookChange = (book) => {
@@ -46,18 +48,31 @@ class BooksApp extends React.Component {
     })
   }
 
+  onSearchPage = () => {
+    return history.location.pathname.indexOf('/search/') > -1
+  }
+
   listen = history.listen((location, action) => {
-    this.updateQuery()
+    if (this.onSearchPage()) {
+      this.updateQuery()
+    }
   })
 
   updateQuery = () => {
+    // in this app, the url is the source of truth
+    // whenever the url is changed, the UI will be affected and so will the data
     const query = history.location.pathname.substring('/search/'.length)
     this.setState({ query })
     this.getSearchResults(query)
   }
 
   updateUrl = (query) => {
-    history.push('/search/' + query)
+    // notice that when the search query is changed, the url is changed first
+    // since the app is watching the url, the necessary calls will be performed
+
+    // NOTE: uses history.replace() instead of history.push()
+    // so that the back button will go back to the main page instead of the previous query
+    history.replace('/search/' + query)
   }
 
   getSearchResults = (query) => {
